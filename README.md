@@ -5,7 +5,12 @@ Engram is a set of tweaks for the PS Vita's home screen, set in **Settings → S
 - **Scroll Animations**, a faithful port of [Cylinder](https://github.com/rweichler/cylinder) for iOS. The icons move as you scroll between pages. Effects can be combined, or picked at random for each scroll.
 - **Motion Depth**, inspired by ShadowBoard for iOS. Tilt the Vita and the icons float above the wallpaper in 3D.
 
-More categories, such as a Lock Screen one, will sit next to Live Area.
+Engram will grow with future updates: more ways to change the home screen's animations, lock screen customizations, and more. New categories, such as a Lock Screen one, will sit next to Live Area.
+
+| | |
+|---|---|
+| ![Engram's page in Settings, with the Live Area category and the credits](screenshots/engram.png) | ![Scroll Animations settings](screenshots/scroll-animations.png) |
+| ![Choosing Scroll Animations effects](screenshots/effects.png) | ![Motion Depth settings](screenshots/motion-depth.png) |
 
 ```text
 Settings > System > Engram
