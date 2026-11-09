@@ -11,7 +11,7 @@
 
 #include <stdint.h>
 
-#define ENGRAM_VERSION "1.7"
+#define ENGRAM_VERSION "1.0"
 
 // Shadows and Wallpaper Parallax are shelved: neither worked on the console
 // (1.2 to 1.6, see README). Their code stays; set this to 0 to bring them back.

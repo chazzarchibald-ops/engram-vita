@@ -1,5 +1,7 @@
 # Engram
 
+![A PS Vita home screen with Engram running on a custom theme](screenshots/home-screen.webp)
+
 Engram is a set of tweaks for the PS Vita's home screen, set in **Settings → System → Engram**. Its settings are grouped by category. So far there is one, **Live Area**, with two tweaks:
 
 - **Scroll Animations**, a faithful port of [Cylinder](https://github.com/rweichler/cylinder) for iOS. The icons move as you scroll between pages. Effects can be combined, or picked at random for each scroll.
@@ -152,6 +154,8 @@ cmake --build build
 The plugin is `build/engram.suprx`.
 
 ## Status
+
+**1.0** is the first public release. The notes below refer to development builds by their own numbers (1.1 to 1.7, in that order), which all came before it; 1.0 is the same code as 1.7.
 
 **Works on the console** (2026-11-06, retail 3.65, LiveArea NoLimits with 13 pages). The Settings page appears under System, toggles apply within a second, and both cube effects animate. Each scroll animates the 20 bubbles on the two pages on screen.
 
