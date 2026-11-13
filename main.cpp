@@ -15,7 +15,7 @@ extern "C" void *memcpy(void *dst, const void *src, size_t size) {
 	return sceClibMemcpy(dst, src, size);
 }
 
-enum Host { HOST_NONE, HOST_SHELL, HOST_SETTINGS };
+enum Host { HOST_NONE, HOST_SHELL, HOST_SETTINGS, HOST_APP };
 static Host host = HOST_NONE;
 
 static bool module_loaded(const char *name) {
@@ -36,6 +36,9 @@ int module_start(SceSize args, void *argp) {
 	} else if (module_loaded("SceSettings")) {
 		host = HOST_SETTINGS;
 		settings_start();
+	} else {
+		host = HOST_APP; // another system app: Font > Apps only
+		app_font_start();
 	}
 	return SCE_KERNEL_START_SUCCESS;
 }
@@ -45,6 +48,8 @@ int module_stop(SceSize args, void *argp) {
 		shell_stop();
 	else if (host == HOST_SETTINGS)
 		settings_stop();
+	else if (host == HOST_APP)
+		font_stop();
 	return SCE_KERNEL_STOP_SUCCESS;
 }
 

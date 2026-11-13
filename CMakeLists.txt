@@ -11,7 +11,7 @@ endif()
 project(engram C CXX ASM)
 include("${VITASDK}/share/vita.cmake" REQUIRED)
 
-add_executable(engram main.cpp config.cpp effects.cpp shell.cpp settings.cpp paf_stubs.S)
+add_executable(engram main.cpp config.cpp effects.cpp font.cpp shell.cpp settings.cpp paf_stubs.S)
 
 # Paf's C++ headers (ScePaf-RE) aren't part of the SDK, or of this repository.
 set(PAF_HEADERS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../refs/sdk/paf_headers/include" CACHE PATH
@@ -36,6 +36,10 @@ target_link_libraries(engram
   SceKernelThreadMgr_stub_weak
   SceLibKernel_stub_weak
   SceMotion_stub_weak
+  SceSysmem_stub_weak
+  SceAppMgr_stub_weak
+  ScePvf_stub_weak
+  SceKernelModulemgr_stub_weak
   gcc
 )
 

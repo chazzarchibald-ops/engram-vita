@@ -33,6 +33,11 @@
 	paf_stub _ZN3paf5graph7Surface4CopyEiPKv10ImageOrderii, 0xA070D6A7, 0xE57728C4
 	paf_stub _ZN3paf5graph7Surface6AddRefEv, 0xA070D6A7, 0x29FC820B
 	paf_stub _ZN3paf5graph11SurfacePool7GetPoolEi, 0xA070D6A7, 0x0AED177D
+	paf_stub _ZN3paf5graph7TextObj17GetStyleAttributeENS0_18TextStyleAttributeEjRi, 0xA070D6A7, 0xFAAAC287
+	paf_stub _ZN3paf5graph7TextObj17SetStyleAttributeENS0_18TextStyleAttributeEjji, 0xA070D6A7, 0x662D5B9C
+	paf_stub _ZN3paf5graph7TextObj10InvalidateEv, 0xA070D6A7, 0xA4B1A0F8
+	paf_stub _ZN3paf5graph7TextObj15GetStringBufferERPKwRj, 0xA070D6A7, 0x67094D42
+	paf_stub _ZNK3paf5graph7TextObj14GetDrawObjTypeEv, 0xA070D6A7, 0x2467B7D7
 
 	.section .vitalink.fstubs.ScePafStdc,"ax",%progbits
 	paf_stub _Znwj, 0xA7D28DAE, 0xFC5CD359
@@ -48,5 +53,13 @@
 	paf_stub _ZN3paf2ui6Widget8SetScaleERKNS_4math2v4EPNS_5TimerEiifPFvS7_PNS0_12AnimListenerEPvSA_SA_ESA_, 0x073F8C68, 0xEE467CF8
 	paf_stub _ZN3paf2ui6Widget6SetRotERKNS_4math2v4EiPNS_5TimerEiifPFvS7_PNS0_12AnimListenerEPvSA_SA_ESA_, 0x073F8C68, 0xF50BF15B
 	paf_stub _ZN3paf2ui6Widget8SetColorERKNS_4math2v4EPNS_5TimerEiifPFvS7_PNS0_12AnimListenerEPvSA_SA_ESA_, 0x073F8C68, 0x627CDA4E
+	paf_stub _ZN3paf2ui6Widget12SetMetaAlphaEfPNS_5TimerEiifPFvS3_PNS0_12AnimListenerEPvS6_S6_ES6_, 0x073F8C68, 0x543F0959
+	paf_stub _ZN3paf2ui6Widget12SetShowAlphaEfPNS_5TimerEiifPFvS3_PNS0_12AnimListenerEPvS6_S6_E, 0x073F8C68, 0x1D697704
+	paf_stub _ZNK3paf2ui4Text11GetTypeNameEv, 0x073F8C68, 0x45AA2058
+	paf_stub _ZN3paf2ui4Text9GetLengthERj, 0x073F8C68, 0xF7B5518D
+	paf_stub _ZN3paf2ui4Text17GetStyleAttributeENS_5graph18TextStyleAttributeEjRi, 0x073F8C68, 0xA695F73D
+	paf_stub _ZN3paf2ui4Text17GetStyleAttributeENS_5graph18TextStyleAttributeEjRNS_4math2v2E, 0x073F8C68, 0x5988C89B
+	paf_stub _ZN3paf2ui4Text17SetStyleAttributeENS_5graph18TextStyleAttributeEjji, 0x073F8C68, 0x56739225
+	paf_stub _ZN3paf2ui4Text10InvalidateEv, 0x073F8C68, 0xDC679268
 
 	.section .note.GNU-stack,"",%progbits
