@@ -18,7 +18,6 @@ The second public release.
 ### Improved
 
 - Engram rests while an app is open: Motion Depth stops reading the motion sensor and nothing else runs, to save battery.
-- Edit mode pauses Scroll Animations and Icon Placement.
 - The failsafe turns Engram off only after two boots in a row that crashed within 30 seconds, so a quick restart doesn't trip it.
 - The log starts again past 256 KB, keeping the previous one as `log.old.txt`.
 

@@ -49,7 +49,6 @@ Settings > System > Engram
 **Improved**
 
 - **Engram rests while an app is open.** With an app in front, Motion Depth stops reading the motion sensor and nothing else runs until you're back on the home screen, which saves battery.
-- **Edit mode pauses the effects.** Holding an empty spot on the home screen to rearrange icons pauses Scroll Animations and Icon Placement until you're done.
 - **The failsafe is less jumpy.** It now turns Engram off only after two boots in a row that crashed within 30 seconds, so a quick restart (to apply a font, say) no longer turns Engram off.
 - **The log starts again** once it passes 256 KB, and the previous one is kept as `log.old.txt`, so a log you send is recent.
 
@@ -168,7 +167,6 @@ How it works:
 - **The layout is worked out from the grid every frame.** SceShell keeps each bubble in its grid slot, and Engram moves, scales and turns it to where the layout puts that slot, much as Scroll Animations does mid-scroll. So the layout follows SceShell: new bubbles, recreated ones and rearranged pages all land in it.
 - **A page goes back to the grid while SceShell is working on it.** If SceShell is moving, scaling or turning any bubble on the page (`FindAnim`, as when a folder opens or closes or the icons come in), or one is off the grid (being dragged in edit mode), the page goes back to the grid, leaving SceShell's animations alone. When it's settled, the page eases back into the layout over a quarter of a second.
 - **Folders:** opening a folder makes a new widget on the home page, outside the pages' scroller, with a new id each time, and the folder's icons are in an icon container (`0xC6063E76`) inside it, named "0", "1" and so on like the home screen's. Each frame Engram looks for visible icon containers outside the scroller, and only places their icons once they're all on a known grid: the home grid, or the 124 px 3-4-3 grid the probe found beside the pages. The first few containers and open folders it finds are logged (`folder: ...`).
-- **Edit mode** (hold an empty spot on the home screen) pauses Icon Placement and Scroll Animations, and they come back once you're out of it. In edit mode SceShell zooms the pages out and adds a few buttons; the icons don't wobble. The log showed it as a new widget beside the pages' scroller, with a new id each time and no icons in it, so that's what Engram looks for. An open folder is a new widget there too, but it holds the folder's icons.
 - **Folder icons are made afresh each time a folder opens,** and they take on the turn and scale of the folder's icon on the home screen, which the home layout may have turned. So when the folder layout is off, each icon of an open folder is set upright at full size once, after the folder has finished opening.
 - **Changing the layout** eases the old one out, then the new one in. A page coming onto the screen is already in the layout.
 - **Not checked yet on the console:** whether tapping an icon follows it to its new place, and which way Paf turns icons (if the book's pages bulge towards you instead of away, the turn's sign is the wrong way round).
