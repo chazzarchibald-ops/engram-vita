@@ -52,7 +52,7 @@
 #define LIB_SCEPAFTOPLEVEL 0x4D9A9DD0
 #define NID_FRAMEWORK_CTOR 0xE2860A99 // paf::Framework::Framework(InitParam const&)
 
-// Framework::InitParam, ScePaf 3.65: from 0x24, an address and a size for a
+// Framework::InitParam, ScePaf 3.60 and 3.65: from 0x24, an address and a size for a
 // font in memory for each language slot, Japanese, Latin, Hangul, Chinese
 // (Framework::Framework copies them to the slots at 0xE0176458 + 4 and + 8).
 #define INIT_FONT_MEMORY 0x24

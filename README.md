@@ -109,7 +109,7 @@ Some of these may fix problems people saw on 1.0:
 
 The same credits appear at the bottom of the Engram page in Settings, as the small description text of a Credits row.
 
-Retail firmware 3.65 only, because it checks SceShell's module NID.
+Retail firmware 3.60 and 3.65 only, because it checks SceShell's module NID.
 
 ## License
 
@@ -253,7 +253,7 @@ How it works:
 
 - **The apps:** Paf, the UI library the home screen and system apps are built on, can open a font from memory for each of its four language slots (Japanese, Latin, Hangul and Chinese), given in `paf::Framework::InitParam`. Engram reads your font into its own memory and puts it in those slots as the app starts Paf, through the app's own import of the Framework constructor, so Paf opens it itself, for the whole app. Nothing shared between apps is patched: in a test build, hooking ScePaf's own imports on the home screen reached every app that uses Paf and crashed Settings.
 - **The Live Area:** the home screen's Paf gets the Live Area font in its four language slots, as an app does, so it reaches every part of the home screen.
-- **The places:** Paf draws a character from its text's font family first, when that family has a font and the font has the character, and falls back to the language slots otherwise. Engram moves each place's text (text widgets, and the text objects of buttons and toggles) to a family nothing else uses, and puts the place's font into that family's font object in Paf's font cache, then has the text laid out again, a few texts at a time. Places on the same font share one family and one copy of it. A font up to 128 KB is read into the home screen's memory; a bigger one is opened from its file, which saves memory but holds the file open, and the home screen has little room for either. The font object is kept for the whole boot, so each font goes in once. Paf loads at a different address each boot, so Engram reads the addresses it needs from Paf's own code, after checking that Paf is the 3.65 build it was written for.
+- **The places:** Paf draws a character from its text's font family first, when that family has a font and the font has the character, and falls back to the language slots otherwise. Engram moves each place's text (text widgets, and the text objects of buttons and toggles) to a family nothing else uses, and puts the place's font into that family's font object in Paf's font cache, then has the text laid out again, a few texts at a time. Places on the same font share one family and one copy of it. A font up to 128 KB is read into the home screen's memory; a bigger one is opened from its file, which saves memory but holds the file open, and the home screen has little room for either. The font object is kept for the whole boot, so each font goes in once. Paf loads at a different address each boot, so Engram reads the addresses it needs from Paf's own code, after checking that Paf is the 3.60 or 3.65 build it was written for. The two builds differ, but not in anything Engram reads: the same code is at the same offsets in both.
 - **The places with the Live Area on System Font:** left alone, Paf fills its Korean and Chinese slots with system fonts it opens by number, and opens them again from time to time. Each time, a place font Engram had just put in stopped drawing. So Engram points those two slots at the system's Japanese font, which Paf has open already, and Paf has nothing to open by number. The real Korean and Chinese fonts would each stay open as a file, and the home screen has no room to spare for that.
 - **Engram only ever opens fonts.** In testing, asking a font for a letter or closing one while Paf was drawing crashed the home screen, so Engram does neither.
 - **The boot warning** is shown before the home screen is fully up, so Engram starts its place font check the moment Paf starts, and the warning comes up in its font from the start.
@@ -369,6 +369,13 @@ The Settings page uses the same recipe as HENkaku and Turbo Storage ([vita-turbo
 ## Build
 
 You need [VitaSDK](https://vitasdk.org) and Paf's C++ headers from [ScePaf-RE](https://github.com/GrapheneCt/ScePaf-RE), which aren't included here. Engram was built against a lightly modified copy of them (its `paf/math/math.h` defines the vector classes), so the current upstream may need small changes.
+
+Unmodified ScePaf-RE builds Engram at commit `6129e91` (2025-09-01). The next one, `7b1d3b6` ("Updated everything"), doesn't: its `paf/common/halt_assert.h` defines a global `Log` object in the header, which needs a C runtime to construct and destroy, and Engram has none (the link fails on `__dso_handle`, `__aeabi_atexit` and `empty_string`).
+
+```sh
+git clone https://github.com/GrapheneCt/ScePaf-RE
+git -C ScePaf-RE checkout 6129e91
+```
 
 ```sh
 cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DPAF_HEADERS_DIR=/path/to/ScePaf-RE/include

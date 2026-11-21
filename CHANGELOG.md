@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### New
+
+- **Retail firmware 3.60**, as well as 3.65. Engram accepts 3.60's SceShell (NID `0x0552F692`). Place fonts also check that ScePaf is 3.60's (`0xCD679177`) or 3.65's (`0x73F90499`), not only its segment sizes: the two builds' segments are the same size, and every offset Engram reads in Paf is the same in both.
+
 ## 1.6
 
 ### New

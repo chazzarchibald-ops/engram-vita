@@ -45,6 +45,7 @@
 
 using namespace paf;
 
+#define NID_SCESHELL_360 0x0552F692
 #define NID_SCESHELL_365 0x5549BF1F
 
 // SceShell calls this on its main thread once Paf is up; shelltheme starts the
@@ -2075,13 +2076,21 @@ static void font_probe(void) {
 // 0xE032F61B one boot and 0xE033A22B the next), so the first test, which read
 // the dump's 0xE0161D60, crashed SceShell. Paf's font library and font cache
 // are read from Paf's own code, the movw/movt pairs that load them, after
-// checking Paf's segment sizes match the 3.65 dump's.
+// checking Paf is a build this was checked against, and its segment sizes.
+//
+// Retail 3.60's ScePaf (NID 0xCD679177) isn't byte for byte 3.65's, but its
+// segments are the same size and everything below is at the same offset:
+// the two movw/movt pairs, the font cache's node layout, InitParam's +0x54
+// and +0x58, GetDrawObj at vtable slot 62 with its list at +0x24C (checked
+// against a 3.60 ELF, 2026-11-21).
 #define ENGRAM_PLACE_FONTS 1
 #if ENGRAM_PLACE_FONTS
 #define PL_EVERY 2 // the quick menu makes its texts as it opens
 #define PL_EARLY 120
 #define PL_LOGS 12 // per place
-// Offsets into ScePaf's code (the dump's 0xE0208C20 base) of the movw/movt
+#define NID_SCEPAF_360 0xCD679177
+#define NID_SCEPAF_365 0x73F90499
+// Offsets into ScePaf's code (the 3.65 dump's 0xE0208C20 base) of the movw/movt
 // pairs that load its font library pointer and its font cache.
 #define PAF_TEXT_SIZE 0x300D00
 #define PAF_DATA_SIZE 0x166D0
@@ -2113,6 +2122,10 @@ static bool find_paf_font_data(void) {
 	tinfo.size = sizeof(tinfo);
 	if (taiGetModuleInfo("ScePaf", &tinfo) < 0)
 		return false;
+	if (tinfo.module_nid != NID_SCEPAF_360 && tinfo.module_nid != NID_SCEPAF_365) {
+		log_line("place fonts: ScePaf NID %08X\n", (unsigned)tinfo.module_nid);
+		return false;
+	}
 	SceKernelModuleInfo info;
 	sceClibMemset(&info, 0, sizeof(info));
 	info.size = sizeof(info);
@@ -2664,7 +2677,7 @@ static void place_fonts(void) {
 			fp_text_fn = stub_target((const void *)paf_text_type_name);
 		if (!find_paf_font_data()) {
 			places_ready = -1;
-			log_line("place fonts: Paf isn't the 3.65 build this was written for: off\n");
+			log_line("place fonts: Paf isn't the 3.60 or 3.65 build this was written for: off\n");
 			return;
 		}
 		for (int p = 0; p < PLACE_COUNT; p++) {
@@ -2790,7 +2803,7 @@ static void open_shared_fonts(void) {
 		return;
 	if (!paf_pvf_lib && !find_paf_font_data()) {
 		shared_done = true;
-		log_line("system fonts: Paf isn't the 3.65 build this was written for: the shared fonts aren't opened\n");
+		log_line("system fonts: Paf isn't the 3.60 or 3.65 build this was written for: the shared fonts aren't opened\n");
 		return;
 	}
 	void *lib = *(void *const *)paf_pvf_lib;
@@ -2825,7 +2838,7 @@ static void share_cjk_slots(void) {
 		return;
 	if (!paf_slots && !find_paf_font_data()) {
 		cjk_done = true;
-		log_line("system fonts: Paf isn't the 3.65 build this was written for: Hangul and Chinese left alone\n");
+		log_line("system fonts: Paf isn't the 3.60 or 3.65 build this was written for: Hangul and Chinese left alone\n");
 		return;
 	}
 	uint32_t japanese = *(const uint32_t *)(paf_slots + PAF_SLOT_SHARED_ID);
@@ -3799,8 +3812,8 @@ int shell_start(void) {
 	tai_module_info_t info;
 	info.size = sizeof(info);
 	int ret = taiGetModuleInfo("SceShell", &info);
-	if (ret < 0 || info.module_nid != NID_SCESHELL_365) {
-		log_line("not retail 3.65 SceShell, staying off: ret=0x%08X nid=0x%08X\n", ret, info.module_nid);
+	if (ret < 0 || (info.module_nid != NID_SCESHELL_360 && info.module_nid != NID_SCESHELL_365)) {
+		log_line("not retail 3.60 or 3.65 SceShell, staying off: ret=0x%08X nid=0x%08X\n", ret, info.module_nid);
 		return 0;
 	}
 
